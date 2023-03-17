@@ -59,9 +59,9 @@ class TwitterBot:
         for tweet in tweets:
             d = {}
             d['id'] = tweet.id
+            d['created_at'] = tweet.created_at
             d['user'] = tweet.author_id
             d['text'] = tweet.text
-            d['created_at'] = tweet.created_at
             d['entities'] = set([en['entity']['name'] for en in tweet.context_annotations])
             
             tweet_list.append(d)
