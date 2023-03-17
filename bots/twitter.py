@@ -34,14 +34,14 @@ class TwitterBot:
         
     def get_recent_tweets(self,
                           query: str,
-                          tweet_fields: list = ['author_id', 'created_at', 'context_annotations'],
+                          tweet_fields: list = ['created_at', 'context_annotations'],
                           limit: int = 10) -> List[dict]:
         if limit <= 100:
             try:
                 logger.debug(f'Receiving {limit} tweets')
                 tweets_data = self.client.search_recent_tweets(query=query,
-                                                              tweet_fields=tweet_fields,
-                                                              max_results=limit)
+                                                               tweet_fields=tweet_fields,
+                                                               max_results=limit)
                 tweets = tweets_data.data
             except Exception as e:
                 logger.warning(f'Could not get recent tweets, returning empty dicts - {e}')
@@ -50,9 +50,9 @@ class TwitterBot:
             try:
                 logger.debug(f'Receiving {limit} tweets using paginator')
                 tweets = tweepy.Paginator(self.client.search_recent_tweets,
-                                        query=query,
-                                        tweet_fields=tweet_fields,
-                                        max_results=100).flatten(limit=limit)
+                                          query=query,
+                                          tweet_fields=tweet_fields,
+                                          max_results=100).flatten(limit=limit)
             except Exception as e:
                 logger.warning(f'Could not get recent tweets, returning empty dicts - {e}')
                 return [{}]
@@ -62,7 +62,6 @@ class TwitterBot:
             d = {}
             d['id'] = tweet.id
             d['created_at'] = tweet.created_at
-            d['user'] = tweet.author_id
             d['text'] = tweet.text
             d['entities'] = set([en['entity']['name'] for en in tweet.context_annotations])
             
