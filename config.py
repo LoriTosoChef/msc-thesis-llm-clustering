@@ -11,12 +11,14 @@ logging.basicConfig(format='%(asctime)s - %(levelname)-8s | %(name)-10s | %(mess
 logger.info('Loading environment variables')
 load_dotenv()
 
+# Twitter
 TWTR_API_DEV = os.environ.get('TWTR_API_DEV')
 TWTR_API_DEV_SECRET = os.environ.get('TWTR_API_DEV_SECRET')
 TWTR_BEARER_DEV_TOKEN = os.environ.get('TWTR_BEARER_DEV_TOKEN')
-TWTR_ACCESS_TOKEN = os.environ.get('TWTR_ACCESS_TOKEN')
-TWTR_ACCESS_TOKEN_SECRET = os.environ.get('TWTR_ACCESS_TOKEN_SECRET')
 
 TWTR_API = os.environ.get('TWTR_API')
 TWTR_API_SECRET = os.environ.get('TWTR_API_SECRET')
 TWTR_BEARER_TOKEN = os.environ.get('TWTR_BEARER_TOKEN')
+
+TWTR_ACCESS_TOKEN = os.environ.get('TWTR_ACCESS_TOKEN')
+TWTR_ACCESS_TOKEN_SECRET = os.environ.get('TWTR_ACCESS_TOKEN_SECRET')
