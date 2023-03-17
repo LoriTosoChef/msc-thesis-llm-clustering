@@ -6,10 +6,18 @@ from dotenv import load_dotenv
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(format='%(asctime)s - %(levelname)-8s | %(name)-10s | %(message)s',
-                    level=logging.DEBUG)
+                    level=logging.INFO)
 
 logger.info('Loading environment variables')
+
 load_dotenv()
+
+# Global Variables
+DATA_DIR = 'data'
+try:
+    os.mkdir(f'{DATA_DIR}')
+except FileExistsError:
+    logger.warning(f'Directory {DATA_DIR} already exists')
 
 # Twitter
 TWTR_API_DEV = os.environ.get('TWTR_API_DEV')
