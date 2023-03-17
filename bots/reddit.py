@@ -2,6 +2,9 @@ import logging
 import praw
 
 logger = logging.getLogger(__name__)
+for logger_name in ("praw", "prawcore"):
+    reddit_logger = logging.getLogger(logger_name)
+    reddit_logger.setLevel(logging.DEBUG)
 
 class RedditBot:
     def __init__(self,
