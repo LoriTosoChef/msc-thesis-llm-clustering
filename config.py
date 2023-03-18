@@ -13,7 +13,7 @@ logger.info('Loading environment variables')
 load_dotenv()
 
 # Global Variables
-DATA_DIR = 'data'
+DATA_DIR = 'raw_data'
 try:
     os.mkdir(f'{DATA_DIR}')
 except FileExistsError:
