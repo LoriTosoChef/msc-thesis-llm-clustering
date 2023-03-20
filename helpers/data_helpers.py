@@ -18,7 +18,8 @@ def clean_tweets_df(df: pd.DataFrame, text_col: str, n: int) -> pd.DataFrame:
     
     df['full_text'] = '\nTWEET: ' + df[text_col]
     
-    df.drop(columns=['splits', 'len_splits', text_col], inplace=True).reset_index(drop=True, inplace=True)
+    df = df.drop(columns=['splits', 'len_splits', text_col])
+    df = df.reset_index(drop=True)
     
     return df
 
