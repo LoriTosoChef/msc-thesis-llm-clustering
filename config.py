@@ -13,7 +13,13 @@ logger.info('Loading environment variables')
 load_dotenv()
 
 # Global Variables
-DATA_DIR = 'raw_data'
+RAW_DATA_DIR = 'raw_data'
+DATA_DIR = 'data'
+try:
+    os.mkdir(f'{RAW_DATA_DIR}')
+except FileExistsError:
+    logger.warning(f'Directory {RAW_DATA_DIR} already exists')
+    
 try:
     os.mkdir(f'{DATA_DIR}')
 except FileExistsError:
