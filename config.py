@@ -42,3 +42,6 @@ REDDIT_APP_ID = os.environ.get('REDDIT_APP_ID')
 REDDIT_SECRET = os.environ.get('REDDIT_SECRET')
 REDDIT_REDIRECT_URL = os.environ.get('REDDIT_REDIRECT_URL')
 REDDIT_USER_AGENT = os.environ.get('REDDIT_USER_AGENT')
+
+# Huggingface
+HUGGINGFACE_TOKEN = os.environ.get('HUGGINGFACE_TOKEN')
