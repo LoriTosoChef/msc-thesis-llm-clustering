@@ -39,7 +39,7 @@ def save_to_parquet(data_dir: str, df: pd.DataFrame, name: str) -> None:
     date_str = year + month + day
     
     df.to_parquet(f'{data_dir}/{name}_{date_str}.parquet', index=False)
-    
+    logger.info(f'{name}.parquet saved.')
     return
 
 
