@@ -4,8 +4,6 @@ import logging
 import tweepy
 from datetime import datetime, timedelta
 
-import config
-
 logger = logging.getLogger(__name__)
 twitter_logger = logging.getLogger("tweepy")
 twitter_logger.setLevel(logging.INFO)
