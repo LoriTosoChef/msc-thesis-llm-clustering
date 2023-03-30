@@ -57,18 +57,18 @@ if __name__ == '__main__':
                             access_secret=config.TWTR_ACCESS_TOKEN_SECRET)
     
     dfs = []
-    for q, e in queries_db.items():
+    for i, (q, e) in enumerate(queries_db.items()):
         query = f'context:{q} -is:retweet lang:en'
         try:
-            tweets = twitter_bot.get_recent_tweets(query=query, limit=1000)
+            tweets = twitter_bot.get_recent_tweets(query=query, limit=5000)
         except Exception as e:
-            logger.info(f'{e} - Hitting limit, waiting...')
-            time.sleep(600)
+            logger.info(f'Hitting limit, waiting...')
+            time.sleep(900)
             
         df = pd.DataFrame.from_dict(tweets)
         if len(df) != 0:
             dfs.append(df)
-        logger.info(f'Downloading context {q} - {e} | Found {len(df)}')
+        logger.info(f'{i} | Found {len(df)} | Context {q} - {e}')
 
     tweets = pd.concat(dfs, ignore_index=True)
     tweets = tweets.loc[~tweets['id'].duplicated()].copy()
