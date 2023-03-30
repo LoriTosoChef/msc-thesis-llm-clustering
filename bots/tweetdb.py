@@ -39,6 +39,8 @@ if __name__ == '__main__':
     contexts['entity_id'] = contexts['entity_id'].astype('str')
     # build query col
     contexts['query'] = contexts['domains'] + '.' + contexts['entity_id']
+    # shuffle queries db
+    contexts = contexts.sample(frac=1).reset_index(drop=True)
     # export to dict
     queries_list = contexts['query'].to_list()
     entities_list = contexts['entity_name'].to_list()
