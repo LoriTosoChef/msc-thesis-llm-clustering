@@ -39,11 +39,11 @@ if __name__ == '__main__':
     contexts['entity_id'] = contexts['entity_id'].astype('str')
     # build query col
     contexts['query'] = contexts['domains'] + '.' + contexts['entity_id']
-    # export to list
+    # export to dict
     queries_list = contexts['query'].to_list()
     entities_list = contexts['entity_name'].to_list()
-    
     queries_db = dict(zip(queries_list, entities_list))
+    print(len(queries_db))
     
     # initialize twitter bot
     twitter_bot = TwitterBot(bearer=config.TWTR_BEARER_TOKEN,
@@ -55,27 +55,36 @@ if __name__ == '__main__':
     dfs = []
     running_total = 0
     for i, (q, e) in enumerate(queries_db.items()):
+        # build query
         query = f'context:{q} -is:retweet lang:en'
         try:
-            tweets = twitter_bot.get_recent_tweets(query=query, limit=5000)
+            tweets = twitter_bot.get_recent_tweets(query=query, limit=2500)
         except Exception as e:
+            # error catcher for calls rate limit, waiting 15 mins
             logger.info(f'{e} - Hitting limit, waiting...')
             time.sleep(900)
-            
+        
+        # initialize df    
         df = pd.DataFrame.from_dict(tweets)
-        if len(df) != 0:
-            dfs.append(df)
-            
+        
         current_len = len(df)
         running_total += current_len    
         logger.info(f'{i} | Found {current_len} - Running Total {running_total} | Context {q} - {e}')
         
+        if len(df) != 0:
+            dfs.append(df)
+        
+        # saving checkpoints along the way
         if i % 50 == 0:
             logger.info('Saving checkpoint...')
             curr_tweets = pd.concat(dfs, ignore_index=True)
             curr_tweets = curr_tweets.loc[~curr_tweets['id'].duplicated()].copy()
-            save_to_parquet(data_dir='../raw_data', df=curr_tweets, name=f'{i}_tweets_db')        
+            save_to_parquet(data_dir='../raw_data', df=curr_tweets, name=f'{i}_tweets_db') 
+        
+        if running_total >= 1000000:
+            break 
 
     tweets = pd.concat(dfs, ignore_index=True)
     tweets = tweets.loc[~tweets['id'].duplicated()].copy()
     save_to_parquet(data_dir='../raw_data', df=tweets, name='tweets_db')
+    
