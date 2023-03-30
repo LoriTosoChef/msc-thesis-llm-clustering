@@ -15,15 +15,6 @@ load_dotenv()
 # Global Variables
 RAW_DATA_DIR = 'raw_data'
 DATA_DIR = 'data'
-try:
-    os.mkdir(f'{RAW_DATA_DIR}')
-except FileExistsError:
-    logger.info(f'Directory {RAW_DATA_DIR} already exists')
-    
-try:
-    os.mkdir(f'{DATA_DIR}')
-except FileExistsError:
-    logger.info(f'Directory {DATA_DIR} already exists')
 
 # Twitter
 TWTR_API_DEV = os.environ.get('TWTR_API_DEV')
