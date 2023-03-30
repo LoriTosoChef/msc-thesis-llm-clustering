@@ -1,5 +1,6 @@
 raw_data/
 .DS_Store
+context-entities.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
