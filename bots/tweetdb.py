@@ -14,9 +14,6 @@ import config
 from helpers.data_helpers import save_to_parquet
 
 DOMAINS = [
-    '11',  # sport
-    '12',  # sports team
-    '13',  # place
     '45',  # brand vertical
     '46',  # brand category
     '47',  # brand
@@ -24,7 +21,6 @@ DOMAINS = [
     '65',  # interest and hobbies vertical
     '66',  # interest and hobbies category
     '67',  # interest and hobbies
-    '71',  # video game
     '152', # food
     '162', # exercise and fitness
     '163', # travel
@@ -74,7 +70,12 @@ if __name__ == '__main__':
         running_total += current_len    
         logger.info(f'{i} | Found {current_len} - Running Total {running_total} | Context {q} - {e}')
         
+        if i % 50 == 0:
+            logger.info('Saving checkpoint...')
+            curr_tweets = pd.concat(dfs, ignore_index=True)
+            curr_tweets = curr_tweets.loc[~curr_tweets['id'].duplicated()].copy()
+            save_to_parquet(data_dir='../raw_data', df=curr_tweets, name=f'{i}_tweets_db')        
 
     tweets = pd.concat(dfs, ignore_index=True)
     tweets = tweets.loc[~tweets['id'].duplicated()].copy()
-    save_to_parquet(data_dir=config.RAW_DATA_DIR, df=tweets, name='tweets_db')
+    save_to_parquet(data_dir='../raw_data', df=tweets, name='tweets_db')
