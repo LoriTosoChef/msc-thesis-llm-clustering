@@ -57,6 +57,7 @@ if __name__ == '__main__':
                             access_secret=config.TWTR_ACCESS_TOKEN_SECRET)
     
     dfs = []
+    running_total = 0
     for i, (q, e) in enumerate(queries_db.items()):
         query = f'context:{q} -is:retweet lang:en'
         try:
@@ -68,7 +69,11 @@ if __name__ == '__main__':
         df = pd.DataFrame.from_dict(tweets)
         if len(df) != 0:
             dfs.append(df)
-        logger.info(f'{i} | Found {len(df)} | Context {q} - {e}')
+            
+        current_len = len(df)
+        running_total += current_len    
+        logger.info(f'{i} | Found {current_len} - Running Total {running_total} | Context {q} - {e}')
+        
 
     tweets = pd.concat(dfs, ignore_index=True)
     tweets = tweets.loc[~tweets['id'].duplicated()].copy()
