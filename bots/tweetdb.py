@@ -45,7 +45,6 @@ if __name__ == '__main__':
     queries_list = contexts['query'].to_list()
     entities_list = contexts['entity_name'].to_list()
     queries_db = dict(zip(queries_list, entities_list))
-    print(len(queries_db))
     
     # initialize twitter bot
     twitter_bot = TwitterBot(bearer=config.TWTR_BEARER_TOKEN,
