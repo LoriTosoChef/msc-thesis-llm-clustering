@@ -63,7 +63,7 @@ if __name__ == '__main__':
         try:
             tweets = twitter_bot.get_recent_tweets(query=query, limit=5000)
         except Exception as e:
-            logger.info(f'Hitting limit, waiting...')
+            logger.info(f'{e} - Hitting limit, waiting...')
             time.sleep(900)
             
         df = pd.DataFrame.from_dict(tweets)
