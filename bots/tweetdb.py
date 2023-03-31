@@ -65,6 +65,11 @@ if __name__ == '__main__':
             logger.info(f'{e} - Hitting limit, waiting...')
             time.sleep(900)
             logger.info('Waited 15MINS: Going On')
+            twitter_bot = TwitterBot(bearer=config.TWTR_BEARER_TOKEN,
+                                     api=config.TWTR_API,
+                                     api_secret=config.TWTR_API_SECRET,
+                                     access=config.TWTR_ACCESS_TOKEN,
+                                     access_secret=config.TWTR_ACCESS_TOKEN_SECRET)
             continue
         
         # initialize df    
@@ -86,6 +91,9 @@ if __name__ == '__main__':
         
         if running_total >= 1000000:
             break 
+        
+        # time buffer
+        time.sleep(60)
 
     tweets = pd.concat(dfs, ignore_index=True)
     tweets = tweets.loc[~tweets['id'].duplicated()].copy()
