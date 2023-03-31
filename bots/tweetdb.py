@@ -64,7 +64,7 @@ if __name__ == '__main__':
             # error catcher for calls rate limit, waiting 15 mins
             logger.info(f'{e} - Hitting limit, waiting...')
             time.sleep(900)
-            tweets = twitter_bot.get_recent_tweets(query=query, limit=2500)
+            logger.info('Waited 15MINS: Going On')
             continue
         
         # initialize df    
