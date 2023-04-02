@@ -53,6 +53,8 @@ def clean_text(text: str) -> str:
     text = re.sub(r"(?:\@|http?\://|https?\://|www)\S+", "", text)
     # removing mentions
     text = re.sub("@[A-Za-z0-9_]+","", text)
+    # removing hashtags
+    text = re.sub("#[A-Za-z0-9_]+","", text)
     # removing excess spaces
     text = re.sub('  ', '', text)
     # normalize text
