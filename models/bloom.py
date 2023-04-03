@@ -24,7 +24,7 @@ class Bloom:
         logger.info(f'Initializing BLOOM model - Temp: {self.temp} - Max Length: {self.max_length}')
     
     
-    def init_prompt(self, template: str, input_vars: List[str]):
+    def init_prompt(self, template: str, input_vars: List[str]) -> PromptTemplate:
         self.input_vars = input_vars
         self.prompt = PromptTemplate(template=template, input_variables=self.input_vars)
         
