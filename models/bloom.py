@@ -10,13 +10,14 @@ logger = logging.getLogger(__name__)
 
 
 class Bloom:
-    def __init__(self, hf_api: str, temp: float = 1e-10, max_length: int = 256) -> None:
+    def __init__(self, hf_api: str, temp: float = 1e-10, max_length: int = 256, max_input_tokens: int = 2048) -> None:
         self.model_name = 'bigscience/bloom'
         self.hf_api = hf_api
         self.temp = temp
         self.max_length = max_length
+        self.max_input_tokens = max_input_tokens
         
-        logger.info(f'Initializing BLOOM model - Temp: {self.temp} - Max Length: {self.max_length}')
+        logger.info(f'Initializing BLOOM model - Temp: {self.temp} - Context window: {self.max_input_tokens} - Max Length: {self.max_length}')
         
         self.model = HuggingFaceHub(huggingfacehub_api_token=self.hf_api,
                                     repo_id=self.model_name,
@@ -33,17 +34,16 @@ class Bloom:
         return self.prompt
     
     
-    def count_prompt_tokens(self, max_input_tokens: int = 2048) -> int:
+    def count_prompt_tokens(self) -> int:
         try:
             logger.info('Initializing tokenizer')
-            tokenizer = BloomTokenizerFast.from_pretrained('bigscience/bloom')
-            tokens = tokenizer(self.prompt.template)['input_ids']
+            tokens = self.model.get_num_tokens(self.prompt.template)
         except Exception as e:
             logger.warning(f'{e}')
             return -1
         
-        if len(tokens) >= max_input_tokens:
-            logger.warning(f'Returning -1, exceeded input tokens limit of {max_input_tokens} - Tokens: {len(tokens)}')
+        if len(tokens) >= self.max_input_tokens:
+            logger.warning(f'Returning -1, exceeded input tokens limit of {self.max_input_tokens} - Tokens: {len(tokens)}')
             return -1
         
         return len(tokens)
