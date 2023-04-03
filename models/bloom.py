@@ -2,6 +2,7 @@ from typing import List, Optional
 
 import logging
 
+from transformers import BloomTokenizerFast
 from langchain import PromptTemplate, LLMChain
 from langchain import HuggingFaceHub
 
@@ -30,6 +31,22 @@ class Bloom:
         logger.info(f'Injecting Variables: {self.input_vars}')
         
         return self.prompt
+    
+    
+    def count_prompt_tokens(self, max_input_tokens: int = 2048) -> int:
+        try:
+            logger.info('Initializing tokenizer')
+            tokenizer = BloomTokenizerFast.from_pretrained('bigscience/bloom')
+            tokens = tokenizer(self.prompt.template)['input_ids']
+        except Exception as e:
+            logger.warning(f'{e}')
+            return -1
+        
+        if len(tokens) >= 2048:
+            logger.warning(f'Returning -1, exceeded input tokens limit of {max_input_tokens} - Tokens: {len(tokens)}')
+            return -1
+        
+        return len(tokens)
     
     
     def run(self, inject_obj: Optional[str]) -> str:
