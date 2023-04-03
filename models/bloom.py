@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class Bloom:
-    def __init__(self, hf_api: str, temp: float, max_length: int = 256) -> None:
+    def __init__(self, hf_api: str, temp: float = 1e-10, max_length: int = 256) -> None:
         self.model_name = 'bigscience/bloom'
         self.hf_api = hf_api
         self.temp = temp
