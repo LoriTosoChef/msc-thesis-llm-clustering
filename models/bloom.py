@@ -16,12 +16,12 @@ class Bloom:
         self.temp = temp
         self.max_length = max_length
         
+        logger.info(f'Initializing BLOOM model - Temp: {self.temp} - Max Length: {self.max_length}')
+        
         self.model = HuggingFaceHub(huggingfacehub_api_token=self.hf_api,
                                     repo_id=self.model_name,
                                     model_kwargs={'temperature': self.temp,
                                                   'max_length': self.max_length})
-        
-        logger.info(f'Initializing BLOOM model - Temp: {self.temp} - Max Length: {self.max_length}')
     
     
     def init_prompt(self, template: str, input_vars: List[str]) -> PromptTemplate:
