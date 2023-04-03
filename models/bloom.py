@@ -52,10 +52,10 @@ class Bloom:
     def run(self, inject_obj: Optional[str]) -> str:
         llm = LLMChain(prompt=self.prompt, llm=self.model)
         try:
-            logger.info(f'Running Text Generation')
+            logger.info(f'Running Text Generation\n')
             out = llm.run(inject_obj)
         except Exception as e:
             logger.warning(e)
             return ''
         
-        return out
+        return llm, out
