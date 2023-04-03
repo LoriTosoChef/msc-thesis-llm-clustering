@@ -1,6 +1,7 @@
 raw_data/
 .DS_Store
 context-entities.csv
+*testing*.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
