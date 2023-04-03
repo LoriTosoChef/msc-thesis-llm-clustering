@@ -18,3 +18,4 @@ TODO
 ## Resources
 - **Twitter context annotations**: https://github.com/twitterdev/twitter-context-annotations/tree/main/files
 - **Langchain Docs**: https://python.langchain.com/en/latest/index.html
+- **GPT4ALL Repo**: https://github.com/nomic-ai/gpt4all
