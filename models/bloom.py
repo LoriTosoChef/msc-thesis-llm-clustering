@@ -42,14 +42,14 @@ class Bloom:
             logger.warning(f'{e}')
             return -1
         
-        if len(tokens) >= 2048:
+        if len(tokens) >= max_input_tokens:
             logger.warning(f'Returning -1, exceeded input tokens limit of {max_input_tokens} - Tokens: {len(tokens)}')
             return -1
         
         return len(tokens)
     
     
-    def run(self, inject_obj: Optional[str]) -> str:
+    def generate(self, inject_obj: Optional[str]) -> str:
         llm = LLMChain(prompt=self.prompt, llm=self.model)
         try:
             logger.info(f'Running Text Generation\n')
