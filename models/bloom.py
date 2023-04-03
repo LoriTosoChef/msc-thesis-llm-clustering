@@ -46,6 +46,7 @@ class Bloom:
             logger.warning(f'Returning -1, exceeded input tokens limit of {self.max_input_tokens} - Tokens: {len(tokens)}')
             return -1
         
+        logger.info(f'Prompt tokens len: {tokens}')
         return tokens
     
     
