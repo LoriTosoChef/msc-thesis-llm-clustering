@@ -11,7 +11,7 @@ class GPT4ALL:
         self.ctx_size = ctx_size
         self.threads = threads
         
-        logger.info(f'Initializing GPT4All model - Temp: {self.temp} - Context window: {self.ctx_size} - Threads: {self.threads}')
+        logger.info(f'\nInitializing GPT4All model - Temp: {self.temp} - Context window: {self.ctx_size} - Threads: {self.threads}')
         
         self.model = GPT4All(decoder_config={'temp': self.temp,
                                              'ctx_size': self.ctx_size,
