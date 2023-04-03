@@ -42,7 +42,7 @@ class Bloom:
             logger.warning(f'{e}')
             return -1
         
-        if len(tokens) >= self.max_input_tokens:
+        if tokens >= self.max_input_tokens:
             logger.warning(f'Returning -1, exceeded input tokens limit of {self.max_input_tokens} - Tokens: {len(tokens)}')
             return -1
         
