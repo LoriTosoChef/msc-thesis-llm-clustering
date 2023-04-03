@@ -17,7 +17,7 @@ class Bloom:
         self.max_length = max_length
         self.max_input_tokens = max_input_tokens
         
-        logger.info(f'Initializing BLOOM model - Temp: {self.temp} - Context window: {self.max_input_tokens} - Max Length: {self.max_length}')
+        logger.info(f'\nInitializing BLOOM model - Temp: {self.temp} - Context window: {self.max_input_tokens} - Max Length: {self.max_length}')
         
         self.model = HuggingFaceHub(huggingfacehub_api_token=self.hf_api,
                                     repo_id=self.model_name,
