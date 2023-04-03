@@ -53,7 +53,7 @@ class Bloom:
     def generate(self, inject_obj: Optional[str]) -> str:
         llm = LLMChain(prompt=self.prompt, llm=self.model)
         try:
-            logger.info(f'Running Text Generation\n')
+            logger.debug(f'Running Text Generation\n')
             out = llm.run(inject_obj)
         except Exception as e:
             logger.warning(e)

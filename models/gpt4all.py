@@ -25,7 +25,6 @@ class GPT4ALL:
     
     def init_prompt(self, prompt: str) -> str:
         self.prompt = prompt
-        return self.prompt
     
 
     def generate(self) -> str:
