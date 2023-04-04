@@ -42,22 +42,27 @@ Simply navigate to the bots directory with ```cd bots```, then run ```python3 tw
 ### Running Local - Models Setup
 1. Clone *llama.cpp* github repo into the project folder, this will be only used to convert *.pth files to *.bin files and to quantize them into 4-bit. To convert and quantize the models follow the instructions found on the *llama.cpp* README (everything working fine as of 04/04/2023).
 2. **GPT4All**: download the model from the *gpt4all* github repo referenced in the *Resources* section. Convert the model to ggml format and quantize it, then save the model path in the environment variable ```GPT4ALL_PATH```. 
-3. **Llama Models**: download the models from the internet, convert and quantize them following the instructions found in the *llama.cpp* repo, then save the model path in the environment variables ```LLAMA_7B_PATH``` and ```LLAMA_13B_PATH```. 
+3. **Llama Models**: download the models from the internet, convert and quantize them following the instructions found in the *llama.cpp* repo, then save the model path in the environment variables ```LLAMA_7B_PATH``` and ```LLAMA_13B_PATH```.
+4. **Alpaca Native**: download the model from the internet (huggingface repo of alpaca-native, community section), migrate it following the instructions found in the *llama.cpp* repo using ```migrate-ggml-2023-03-30-pr613.py```, then save the model path in the environment variables ```ALPACA_7B_NATIVE_PATH```.
 
 
 ## **Additional Info**
 ### Runtimes
 Machine: Macbook Pro M1 Pro 8 Cores 16GB.
 
-100 Generations on ~250-token prompt:
-- BLOOM (api): 5 min 9 sec
-- GPT4All (local, 6 threads): 32 min 26 sec
-- Llama 7B (local, 6 threads): 58 min 39 sec
+100 Generations on ~250-token prompt, 5s fast cooldown, 2m slow cooldown:
+- BLOOM (api): 9m 20s
+- Alpaca 3B (api): 1h 11m 58s
+- Alpaca 11B (api): 
+- GPT4All (local, 6 threads): 37m 26s
+- Llama 7B (local, 6 threads): 1h 3m 39s
 ---
 
 ## **Resources**
 - **Twitter API Docs**: https://developer.twitter.com/en/docs/twitter-api
 - **Twitter context annotations**: https://github.com/twitterdev/twitter-context-annotations/tree/main/files
 - **Langchain Docs**: https://python.langchain.com/en/latest/index.html
+- **bigscience/bloom**: 
+- **declare-lab/flan-alpaca-xl**: https://huggingface.co/declare-lab/flan-alpaca-xl
 - **GPT4ALL Repo**: https://github.com/nomic-ai/gpt4all
 - **llama.cpp**: https://github.com/ggerganov/llama.cpp
