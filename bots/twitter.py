@@ -24,6 +24,7 @@ class TwitterBot:
         self.access = access
         self.access_secret = access_secret
         
+        # init client
         self.client = tweepy.Client(bearer_token=self.bearer,
                                     consumer_key=self.api,
                                     consumer_secret=self.api_secret,
@@ -57,10 +58,12 @@ class TwitterBot:
             
         tweet_list = []
         for tweet in tweets:
+            # create tweet dicts
             d = {}
             d['id'] = tweet.id
             d['created_at'] = tweet.created_at
             d['text'] = tweet.text
+            # extract unique entities
             d['entities'] = set([en['entity']['name'] for en in tweet.context_annotations])
             
             tweet_list.append(d)
