@@ -16,7 +16,8 @@ class Model:
                  gpt4all_path: str,
                  temp: float = 1e-10,
                  ctx_window: int = 2048,
-                 max_tokens: int = 256) -> None:
+                 max_tokens: int = 256,
+                 n_threads: int = 6) -> None:
         
         self.model_name = model_name
         self.temp = temp
@@ -24,6 +25,7 @@ class Model:
         self.max_tokens = max_tokens
         self.hf_api = hf_api
         self.gpt4all_path = gpt4all_path
+        self.n_threads = n_threads
         
         logger.info(f'\nInitializing {self.model_name.upper()} model  - Temp: {self.temp} - Context window: {self.ctx_window} - Max tokens: {self.max_tokens}')
         
@@ -38,7 +40,7 @@ class Model:
             
             self.model = LlamaCpp(model_path=self.gpt4all_path,
                                   n_ctx=self.ctx_window,
-                                  n_threads=8,
+                                  n_threads=self.n_threads,
                                   max_tokens=self.max_tokens,
                                   temperature=self.temp)
     
