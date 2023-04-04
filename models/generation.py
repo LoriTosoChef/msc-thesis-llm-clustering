@@ -13,7 +13,7 @@ class Model:
     def __init__(self,
                  model_name: str,
                  hf_api: str,
-                 gpt4all_path: str,
+                 local_model_path: str,
                  temp: float = 1e-10,
                  ctx_window: int = 2048,
                  max_tokens: int = 256,
@@ -24,25 +24,36 @@ class Model:
         self.ctx_window = ctx_window
         self.max_tokens = max_tokens
         self.hf_api = hf_api
-        self.gpt4all_path = gpt4all_path
+        self.local_model_path = local_model_path
         self.n_threads = n_threads
         
         logger.info(f'\nInitializing {self.model_name.upper()} model  - Temp: {self.temp} - Context window: {self.ctx_window} - Max tokens: {self.max_tokens}')
         
-        if 'bloom' in self.model_name:
-            logger.debug('Bloom model has a preset context window of 2048')
-            self.model = HuggingFaceHub(huggingfacehub_api_token=self.hf_api,
-                                        repo_id='bigscience/bloom',
-                                        model_kwargs={'temperature': self.temp,
-                                                      'max_length': self.max_tokens})
-        elif 'gpt4all' in self.model_name:
-            logger.debug(f'Loading GPT4All model from {self.gpt4all_path}')
+        if 'gpt4all' in self.model_name:
+            logger.debug(f'Loading GPT4All model from {self.local_model_path}')
             
-            self.model = LlamaCpp(model_path=self.gpt4all_path,
+            self.model = LlamaCpp(model_path=self.local_model_path,
                                   n_ctx=self.ctx_window,
                                   n_threads=self.n_threads,
                                   max_tokens=self.max_tokens,
                                   temperature=self.temp)
+        
+        elif 'llama' in self.model_name:
+            logger.debug(f'Loading Llama model from {self.local_model_path}')
+            
+            self.model = LlamaCpp(model_path=self.local_model_path,
+                                  n_ctx=self.ctx_window,
+                                  n_threads=self.n_threads,
+                                  max_tokens=self.max_tokens,
+                                  temperature=self.temp)
+        
+        else:
+            logger.debug(f'Loading from HuggingFace Hub')
+            logger.debug('BLOOM model has a preset context window of 2048')
+            self.model = HuggingFaceHub(huggingfacehub_api_token=self.hf_api,
+                                        repo_id='bigscience/bloom',
+                                        model_kwargs={'temperature': self.temp,
+                                                      'max_length': self.max_tokens})
     
     
     def init_prompt(self, template: str, input_vars: List[str]) -> PromptTemplate:
