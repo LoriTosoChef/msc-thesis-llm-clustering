@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import logging
 
@@ -36,7 +36,11 @@ class Model:
         elif 'gpt4all' in self.model_name:
             logger.debug(f'Loading GPT4All model from {self.gpt4all_path}')
             
-            self.model = LlamaCpp(model_path=self.gpt4all_path)
+            self.model = LlamaCpp(model_path=self.gpt4all_path,
+                                  n_ctx=self.ctx_window,
+                                  n_threads=8,
+                                  max_tokens=self.max_tokens,
+                                  temperature=self.temp)
     
     
     def init_prompt(self, template: str, input_vars: List[str]) -> PromptTemplate:
@@ -45,16 +49,16 @@ class Model:
         
         logger.info(f'Injecting Variables: {self.input_vars}')
         
-        return self.prompt
+        return self.prompt.template
     
     
-    def generate(self, inject_obj: Optional[str]) -> str:
+    def generate(self, inject_obj: Optional[str]) -> Tuple[str, list]:
         llm = LLMChain(prompt=self.prompt, llm=self.model)
         try:
             logger.debug(f'Running Text Generation\n')
             out = llm.run(inject_obj)
         except Exception as e:
             logger.warning(e)
-            return ''
+            return '', []
         
         return llm, out
