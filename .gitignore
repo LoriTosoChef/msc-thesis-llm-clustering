@@ -1,7 +1,9 @@
 raw_data/
+.models/
 .DS_Store
 context-entities.csv
 testing.ipynb
+testing.py
 langchain_testing.ipynb
 
 # Byte-compiled / optimized / DLL files
