@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class Model:
     def __init__(self,
                  model_name: str,
-                 hf_rep0: str = 'bigscience/bloom',
+                 hf_repo: str = 'bigscience/bloom',
                  hf_api: str = '',
                  local_model_path: str = '',
                  temp: float = 1e-10,
@@ -21,7 +21,7 @@ class Model:
                  n_threads: int = 6) -> None:
         
         self.model_name = model_name
-        self.hf_repo = hf_rep
+        self.hf_repo = hf_repo
         self.temp = temp
         self.ctx_window = ctx_window
         self.max_tokens = max_tokens
