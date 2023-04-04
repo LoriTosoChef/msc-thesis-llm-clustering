@@ -52,6 +52,7 @@ Machine: Macbook Pro M1 Pro 8 Cores 16GB.
 100 Generations on ~250-token prompt:
 - BLOOM (api): 5 min 9 sec
 - GPT4All (local, 6 threads): 32 min 26 sec
+- Llama 7B (local, 6 threads): 58 min 39 sec
 ---
 
 ## **Resources**
