@@ -6,7 +6,8 @@ TODO
 ---
 
 ## **TODOs**
-TODO
+- Adjust Llama 7B and 13B params to stop output generation.
+- Explore different prompts, system messages and contexts
 
 ---
 
