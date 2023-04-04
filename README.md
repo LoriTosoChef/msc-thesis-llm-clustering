@@ -11,7 +11,11 @@ TODO
 ---
 
 ## **Instructions**
-### Configurations
+To download tweets and to run the models create a virtual env and install the requirements with 
+
+```pip install -r requirements.txt```
+
+### Initial Configurations
 Create all the environment variables needed and set them. Look for variable names in the ```config.py``` file. Set these two variables from within the ```config.py```file:
 - ```RAW_DATA_DIR``` - where raw datasets will be stored
 - ```DATA_DIR``` - where clean and ready to use datasets will be stored
@@ -34,6 +38,9 @@ Use ```bots/tweetdb.py```. Script to downlaod and store last *n* tweets from pre
 
 Simply navigate to the bots directory with ```cd bots```, then run ```python3 tweetdb.py```. Adjust the time buffer in ```time.sleep()``` for optimal time saving with no timeouts. 
 
+### Models Configurations
+TODO
+
 ---
 
 ## **Resources**
@@ -41,3 +48,4 @@ Simply navigate to the bots directory with ```cd bots```, then run ```python3 tw
 - **Twitter context annotations**: https://github.com/twitterdev/twitter-context-annotations/tree/main/files
 - **Langchain Docs**: https://python.langchain.com/en/latest/index.html
 - **GPT4ALL Repo**: https://github.com/nomic-ai/gpt4all
+- **llama.cpp**: https://github.com/ggerganov/llama.cpp
