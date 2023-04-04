@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 class Model:
     def __init__(self,
                  model_name: str,
-                 hf_api: str,
-                 local_model_path: str,
+                 hf_api: str = '',
+                 local_model_path: str = '',
                  temp: float = 1e-10,
                  ctx_window: int = 2048,
                  max_tokens: int = 256,
