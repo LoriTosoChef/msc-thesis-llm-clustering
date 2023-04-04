@@ -1,5 +1,6 @@
 raw_data/
 .models/
+.llama.cpp/
 .DS_Store
 context-entities.csv
 testing.ipynb
