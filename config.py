@@ -17,6 +17,7 @@ RAW_DATA_DIR = 'raw_data'
 DATA_DIR = 'data'
 GPT4ALL_PATH = os.environ.get('GPT4ALL_PATH')
 LLAMA_7B_PATH = os.environ.get('LLAMA_7B_PATH')
+LLAMA_13B_PATH = os.environ.get('LLAMA_13B_PATH')
 
 # Twitter
 TWTR_API_DEV = os.environ.get('TWTR_API_DEV')
