@@ -18,10 +18,10 @@ def clean_tweets_df(df: pd.DataFrame, text_col: str, n: int) -> pd.DataFrame:
     df['len_splits'] = df['splits'].map(lambda x: len(x))
     df = df.loc[df['len_splits'] >= n].copy()
     
-    # Add starter word
+    # add starter word
     df['full_text'] = '\nTWEET: ' + df[text_col]
     
-    # Clean dataset
+    # clean dataset
     df = df.drop(columns=['splits', 'len_splits', text_col])
     df = df.reset_index(drop=True)
     
@@ -31,11 +31,10 @@ def clean_tweets_df(df: pd.DataFrame, text_col: str, n: int) -> pd.DataFrame:
 def save_to_parquet(data_dir: str, df: pd.DataFrame, name: str) -> None:
     """Helper function to save dataframe to parquet file"""
     logger.debug('Saving {name} to .parquet...')
-    
+    # compile date string
     day = str(datetime.now().day)
     month = str(datetime.now().month)
     year = str(datetime.now().year)
-    
     date_str = year + month + day
     
     df.to_parquet(f'{data_dir}/{name}_{date_str}.parquet', index=False)
