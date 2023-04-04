@@ -32,7 +32,7 @@ Data cleaning and initial preparation can be done using this notebook too. The o
 ### Build DB
 Use ```bots/tweetdb.py```. Script to downlaod and store last *n* tweets from previous 7 days. Change ```DOMAINS``` list to look for desired tweet contexts and annotations. 
 
-Simply run with ```cd bots; python3 tweetdb.py```. Adjust the time buffer in ```time.sleep()``` for optimal time saving with no timeouts. 
+Simply navigate to the bots directory with ```cd bots```, then run ```python3 tweetdb.py```. Adjust the time buffer in ```time.sleep()``` for optimal time saving with no timeouts. 
 
 ---
 
