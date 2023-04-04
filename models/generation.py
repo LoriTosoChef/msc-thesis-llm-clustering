@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 class Model:
     def __init__(self,
                  model_name: str,
+                 hf_rep0: str = 'bigscience/bloom',
                  hf_api: str = '',
                  local_model_path: str = '',
                  temp: float = 1e-10,
@@ -20,6 +21,7 @@ class Model:
                  n_threads: int = 6) -> None:
         
         self.model_name = model_name
+        self.hf_repo = hf_rep
         self.temp = temp
         self.ctx_window = ctx_window
         self.max_tokens = max_tokens
@@ -51,7 +53,7 @@ class Model:
             logger.debug(f'Loading from HuggingFace Hub')
             logger.debug('BLOOM model has a preset context window of 2048')
             self.model = HuggingFaceHub(huggingfacehub_api_token=self.hf_api,
-                                        repo_id='bigscience/bloom',
+                                        repo_id=self.hf_repo,
                                         model_kwargs={'temperature': self.temp,
                                                       'max_length': self.max_tokens})
     
