@@ -25,7 +25,7 @@ class Model:
         self.hf_api = hf_api
         self.gpt4all_path = gpt4all_path
         
-        logger.info(f'\nInitializing model {self.model_name} - Temp: {self.temp} - Context window: {self.ctx_window} - Max tokens: {self.max_tokens}')
+        logger.info(f'\nInitializing {self.model_name.upper()} model  - Temp: {self.temp} - Context window: {self.ctx_window} - Max tokens: {self.max_tokens}')
         
         if 'bloom' in self.model_name:
             logger.debug('Bloom model has a preset context window of 2048')
