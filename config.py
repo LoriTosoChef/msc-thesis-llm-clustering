@@ -15,6 +15,7 @@ load_dotenv()
 # Global Variables
 RAW_DATA_DIR = 'raw_data'
 DATA_DIR = 'data'
+GPT4ALL_PATH = os.environ.get('GPT4ALL_PATH')
 
 # Twitter
 TWTR_API_DEV = os.environ.get('TWTR_API_DEV')
