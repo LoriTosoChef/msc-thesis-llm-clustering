@@ -39,9 +39,19 @@ Use ```bots/tweetdb.py```. Script to downlaod and store last *n* tweets from pre
 
 Simply navigate to the bots directory with ```cd bots```, then run ```python3 tweetdb.py```. Adjust the time buffer in ```time.sleep()``` for optimal time saving with no timeouts. 
 
-### Models Configurations
-TODO
+### Running Local - Models Setup
+1. Clone *llama.cpp* github repo into the project folder, this will be only used to convert *.pth files to *.bin files and to quantize them into 4-bit. To convert and quantize the models follow the instructions found on the *llama.cpp* README (everything working fine as of 04/04/2023).
+2. **GPT4All**: download the model from the *gpt4all* github repo referenced in the *Resources* section. Convert the model to ggml format and quantize it, then save the model path in the environment variable ```GPT4ALL_PATH```. 
+3. **Llama Models**: download the models from the internet, convert and quantize them following the instructions found in the *llama.cpp* repo, then save the model path in the environment variables ```LLAMA_7B_PATH``` and ```LLAMA_13B_PATH```. 
 
+
+## **Additional Info**
+### Runtimes
+Machine: Macbook Pro M1 Pro 8 Cores 16GB.
+
+100 Generations on ~250-token prompt:
+- BLOOM (api): 5 min 9 sec
+- GPT4All (local, 6 threads): 32 min 26 sec
 ---
 
 ## **Resources**
