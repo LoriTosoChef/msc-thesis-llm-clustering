@@ -53,7 +53,7 @@ Machine: Macbook Pro M1 Pro 8 Cores 16GB.
 100 Generations on ~250-token prompt, 5s fast cooldown, 2m slow cooldown:
 - BLOOM (api): 9m 20s
 - Alpaca 3B (api): 1h 11m 58s
-- Alpaca 11B (api): 
+- Alpaca 770M (api): 28m 53d
 - GPT4All (local, 6 threads): 37m 26s
 - Llama 7B (local, 6 threads): 1h 3m 39s
 ---
@@ -62,7 +62,7 @@ Machine: Macbook Pro M1 Pro 8 Cores 16GB.
 - **Twitter API Docs**: https://developer.twitter.com/en/docs/twitter-api
 - **Twitter context annotations**: https://github.com/twitterdev/twitter-context-annotations/tree/main/files
 - **Langchain Docs**: https://python.langchain.com/en/latest/index.html
-- **bigscience/bloom**: 
+- **bigscience/bloom**: https://huggingface.co/bigscience/bloom
 - **declare-lab/flan-alpaca-xl**: https://huggingface.co/declare-lab/flan-alpaca-xl
 - **GPT4ALL Repo**: https://github.com/nomic-ai/gpt4all
 - **llama.cpp**: https://github.com/ggerganov/llama.cpp
