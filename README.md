@@ -56,6 +56,7 @@ Machine: Macbook Pro M1 Pro 8 Cores 16GB.
 - Alpaca 770M (api): 28m 53d
 - GPT4All (local, 6 threads): 37m 26s
 - Llama 7B (local, 6 threads): 1h 3m 39s
+- Llama 13B (local, 6 threads): 1h 39m 54s
 ---
 
 ## **Resources**
