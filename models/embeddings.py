@@ -22,7 +22,7 @@ class SentenceEmbeddings:
             
     
     def generate_embeddings(self, text: list):
-        logger.info(f'{self.model_name} - Generating sentence embeddings...')
+        logger.info(f'{self.model_name.upper()} - Generating sentence embeddings...')
         return self.model.encode(text)
     
 
