@@ -42,8 +42,8 @@ def save_to_parquet(data_dir: str, df: pd.DataFrame, name: str) -> None:
     return
 
 
-def clean_text(text: str) -> str:
-    """Helper function to clean and normalize tweets text"""
+def light_clean_text(text: str) -> str:
+    """Helper function to clean and normalize tweets text lightly for llm ingestion"""
     logger.debug('Cleaning text...')
     
     text = ' '.join(text.split())
