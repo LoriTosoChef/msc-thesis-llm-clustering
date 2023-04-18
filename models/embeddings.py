@@ -41,7 +41,7 @@ class WordEmbeddings:
         elif 'glove-twitter' in self.model_name:
             logger.debug('Loading glove-twitter-200')
             self.model = api.load('glove-twitter-200')
-        elif 'glove-twitter' in self.model_name:
+        elif 'glove-wiki' in self.model_name:
             logger.debug('Loading glove-wiki-gigaword-300')
             self.model = api.load('glove-wiki-gigaword-300')
     
