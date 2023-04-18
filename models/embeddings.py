@@ -1,4 +1,7 @@
 import logging
+import pandas as pd
+import numpy as np
+
 import config
 
 from sentence_transformers import SentenceTransformer
@@ -43,5 +46,28 @@ class WordEmbeddings:
             self.model = api.load('glove-wiki-gigaword-300')
     
     
-    def generate_embeddings(self, text):
-        pass
+    def generate_embeddings(self, input_texts: pd.Series) -> list:
+        logger.info(f'{self.model_name.upper()} - Generating sentence embeddings...')
+        # init embeddings list
+        embeddings = []
+        for tokens in input_texts:
+            # init zero vector and vector list
+            zero_vector = np.zeros(self.model.vector_size)
+            vectors = []
+            for token in tokens:
+                if token in self.model:
+                    try:
+                        logger.debug(f'Checking {token} in vocabulary')
+                        vectors.append(self.model[token])
+                    except KeyError:
+                        logger.warning(f'{token} not in vocabulary, skipping...')
+                        continue
+            if vectors:
+                vectors = np.asarray(vectors)
+                # compute average across 0 axis
+                avg_vec = vectors.mean(axis=0)
+                embeddings.append(avg_vec)
+            else:
+                embeddings.append(zero_vector)
+        
+        return embeddings
