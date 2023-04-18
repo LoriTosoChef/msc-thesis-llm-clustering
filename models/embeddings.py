@@ -24,9 +24,9 @@ class SentenceEmbeddings:
             self.model = SentenceTransformer('all-distilroberta-v1')
             
     
-    def generate_embeddings(self, text: list):
+    def generate_embeddings(self, input_texts: pd.Series):
         logger.info(f'{self.model_name.upper()} - Generating sentence embeddings...')
-        return self.model.encode(text)
+        return self.model.encode(input_texts.to_list())
     
 
 class WordEmbeddings:
