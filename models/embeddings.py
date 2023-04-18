@@ -19,7 +19,7 @@ class SentenceEmbeddings:
         if 'mpnet' in self.model_name:
             logger.debug('Loading all-mpnet-base-v2 model')
             self.model = SentenceTransformer('all-mpnet-base-v2')
-        elif 'distilroberta' in self.model_name:
+        elif 'distil-roberta' in self.model_name:
             logger.debug('Loading all-distilroberta-v1')
             self.model = SentenceTransformer('all-distilroberta-v1')
             
