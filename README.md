@@ -67,3 +67,4 @@ Machine: Macbook Pro M1 Pro 8 Cores 16GB.
 - **declare-lab/flan-alpaca-xl**: https://huggingface.co/declare-lab/flan-alpaca-xl
 - **GPT4ALL Repo**: https://github.com/nomic-ai/gpt4all
 - **llama.cpp**: https://github.com/ggerganov/llama.cpp
+- **UMAP+HDBSCAN**: Paper -> https://ieeexplore.ieee.org/document/9640285
