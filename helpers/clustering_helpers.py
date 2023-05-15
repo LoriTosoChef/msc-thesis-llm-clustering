@@ -11,7 +11,7 @@ def clustering_scores(embeddings: List[float], clusters: List[int]) -> dict:
     scores = {}
     scores['calinski'] = calinski_harabasz_score(embeddings, clusters)
     scores['davies'] = davies_bouldin_score(embeddings, clusters)
-    scores['silhouette'] = silhouette = silhouette_score(embeddings, clusters)
+    scores['silhouette'] = silhouette_score(embeddings, clusters)
     
     logger.info(f'Calinski-Harabasz Index: {scores["calinski"]}')
     logger.info(f'Davies-Bouldin Index: {scores["davies"]}')
