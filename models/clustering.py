@@ -25,15 +25,15 @@ class ClusteringModel:
                                 tol=kwargs['tol'],
                                 n_init=kwargs['n_init'],
                                 random_state=self.random_state)
-        elif 'dbscan' in self.model_name:
+        elif self.model_name == 'dbscan':
             logger.info(f'EPS: {kwargs["eps"]} - MIN_SAMPLES: {kwargs["min_samples"]} - METRIC: {kwargs["metric"]}')
             self.model = DBSCAN(eps=kwargs['eps'],
                                 min_samples=kwargs['min_samples'],
-                                metric=['metric'],)
-        elif 'hdbscan' in self.model_name:
+                                metric=kwargs['metric'],)
+        elif self.model_name == 'hdbscan':
             logger.info(f'EPS: {kwargs["eps"]} - MIN_SIZE: {kwargs["min_cluster_size"]} - MIN_SAMPLE: {kwargs["min_samples"]}')
             self.model = hdbscan.HDBSCAN(min_cluster_size=kwargs['min_cluster_size'],
-                                         min_samples=kwargs['min_minsaples'],
+                                         min_samples=kwargs['min_samples'],
                                          metric=kwargs['metric'],
                                          cluster_selection_epsilon=kwargs['eps'])
             
