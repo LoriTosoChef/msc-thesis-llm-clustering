@@ -52,4 +52,5 @@ class ClusteringModel:
         
         self.model.fit(embeddings)
         self.clusters = self.model.labels_
+        self.embeddings = embeddings
         
