@@ -3,6 +3,7 @@ import logging
 
 import hdbscan
 from sklearn.cluster import KMeans, DBSCAN
+from sklearn.decomposition import PCA
 
 logger = logging.getLogger(__name__)
 
@@ -37,8 +38,18 @@ class ClusteringModel:
                                          cluster_selection_epsilon=kwargs['eps'])
             
     
-    def fit_predict(self, embeddings: List[float]):
+    def fit_predict(self,
+                    embeddings: List[float],
+                    pca_flag: bool = False,
+                    **kwargs):
+        
         logger.info(f'{self.model_name.upper()}: searching clusters...')
+        
+        if pca_flag:
+            logger.info(f'Performing PCA with {kwargs["n_components"]} components...')
+            pca = PCA(n_components=kwargs['n_components'])
+            embeddings = pca.fit_transform(embeddings)
+        
         self.model.fit(embeddings)
         self.clusters = self.model.labels_
         
