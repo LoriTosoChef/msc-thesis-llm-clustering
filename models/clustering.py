@@ -17,21 +17,21 @@ class ClusteringModel:
         self.model_name = model_name
         self.random_state = random_state
         
-        logger.info(f'Initializing {self.model_name.upper()}')
+        logger.debug(f'Initializing {self.model_name.upper()}')
         if 'kmeans' in self.model_name:
-            logger.info(f'N_CLUSTERS: {kwargs["n_clusters"]} - MAX_ITER: {kwargs["max_iter"]} - TOL: {kwargs["tol"]}')
+            logger.debug(f'N_CLUSTERS: {kwargs["n_clusters"]} - MAX_ITER: {kwargs["max_iter"]} - TOL: {kwargs["tol"]}')
             self.model = KMeans(n_clusters=kwargs['n_clusters'],
                                 max_iter=kwargs['max_iter'],
                                 tol=kwargs['tol'],
                                 n_init=kwargs['n_init'],
                                 random_state=self.random_state)
         elif self.model_name == 'dbscan':
-            logger.info(f'EPS: {kwargs["eps"]} - MIN_SAMPLES: {kwargs["min_samples"]} - METRIC: {kwargs["metric"]}')
+            logger.debug(f'EPS: {kwargs["eps"]} - MIN_SAMPLES: {kwargs["min_samples"]}')
             self.model = DBSCAN(eps=kwargs['eps'],
                                 min_samples=kwargs['min_samples'],
                                 metric=kwargs['metric'])
         elif self.model_name == 'hdbscan':
-            logger.info(f'EPS: {kwargs["eps"]} - MIN_SIZE: {kwargs["min_cluster_size"]} - MIN_SAMPLE: {kwargs["min_samples"]}')
+            logger.debug(f'EPS: {kwargs["eps"]} - MIN_SIZE: {kwargs["min_cluster_size"]} - MIN_SAMPLE: {kwargs["min_samples"]}')
             self.model = hdbscan.HDBSCAN(min_cluster_size=kwargs['min_cluster_size'],
                                          min_samples=kwargs['min_samples'],
                                          metric=kwargs['metric'],
@@ -43,10 +43,10 @@ class ClusteringModel:
                     pca_flag: bool = False,
                     **kwargs):
         
-        logger.info(f'{self.model_name.upper()}: searching clusters...')
+        logger.debug(f'{self.model_name.upper()}: searching clusters...')
         
         if pca_flag:
-            logger.info(f'Performing PCA with {kwargs["n_components"]} components...')
+            logger.debug(f'Performing PCA with {kwargs["n_components"]} components...')
             pca = PCA(n_components=kwargs['n_components'])
             embeddings = pca.fit_transform(embeddings)
         
