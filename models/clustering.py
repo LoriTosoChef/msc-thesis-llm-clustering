@@ -29,7 +29,7 @@ class ClusteringModel:
             logger.info(f'EPS: {kwargs["eps"]} - MIN_SAMPLES: {kwargs["min_samples"]} - METRIC: {kwargs["metric"]}')
             self.model = DBSCAN(eps=kwargs['eps'],
                                 min_samples=kwargs['min_samples'],
-                                metric=kwargs['metric'],)
+                                metric=kwargs['metric'])
         elif self.model_name == 'hdbscan':
             logger.info(f'EPS: {kwargs["eps"]} - MIN_SIZE: {kwargs["min_cluster_size"]} - MIN_SAMPLE: {kwargs["min_samples"]}')
             self.model = hdbscan.HDBSCAN(min_cluster_size=kwargs['min_cluster_size'],
