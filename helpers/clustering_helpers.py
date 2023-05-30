@@ -50,8 +50,18 @@ def dbscan_loop(data,
             res['n_components'].append(n_components)
             res['min_samples'].append(min_samples)
             res['score'].append(scores)
+    
+    res_array = {key: np.array(value) for key, value in res.items()}
+
+    best_score_index = np.argmax(res_array['score'])
+
+    best_score = res_array['score'][best_score_index]
+    best_n_components = res_array['n_components'][best_score_index]
+    best_min_samples = res_array['min_samples'][best_score_index]
+
+    logger.debug(f"Score: {best_score} - PCA: {best_n_components} - MIN_SAMPLES: {best_min_samples}")
             
-    return res
+    return best_score, best_n_components, best_min_samples
 
 
 def kmeans_loop(data,
@@ -91,4 +101,15 @@ def kmeans_loop(data,
                     res['tol'].append(tol)
                     res['score'].append(scores)
     
-    return res
+    res_array = {key: np.array(value) for key, value in res.items()}
+
+
+    best_score_index = np.argmax(res_array['score'])
+
+    best_score = res_array['score'][best_score_index]
+    best_n_components = res_array['n_components'][best_score_index]
+    best_max_iter = res_array['max_iter'][best_score_index]
+    best_n_clusters = res_array['n_clusters'][best_score_index]
+    best_tol = res_array['tol'][best_score_index]
+        
+    return best_score, best_n_components, best_max_iter, best_n_clusters, best_tol
