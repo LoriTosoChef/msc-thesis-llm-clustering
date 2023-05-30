@@ -44,7 +44,7 @@ def dbscan_loop(data,
             try:
                 scores = silhouette_score(data, dbscan.clusters)
             except Exception as e:
-                print(e)
+                logger.debug(e)
                 scores = -np.inf
 
             res['n_components'].append(n_components)
@@ -82,7 +82,7 @@ def kmeans_loop(data,
                     try:
                         scores = silhouette_score(data, kmeans.clusters)
                     except Exception as e:
-                        print(e)
+                        logger.debug(e)
                         scores = -np.inf
 
                     res['n_components'].append(n_components)
