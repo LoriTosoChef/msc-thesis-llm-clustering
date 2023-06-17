@@ -40,3 +40,6 @@ REDDIT_USER_AGENT = os.environ.get('REDDIT_USER_AGENT')
 
 # Huggingface
 HUGGINGFACE_TOKEN = os.environ.get('HUGGINGFACE_TOKEN')
+
+# OpenAI
+OPENAI_API_KEY = os.environ.get('HUGGINGFACE_TOKEN')
