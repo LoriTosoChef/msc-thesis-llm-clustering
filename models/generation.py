@@ -1,6 +1,7 @@
 from typing import List, Optional, Tuple
 
 import logging
+import time
 
 from langchain import PromptTemplate, LLMChain
 from langchain import HuggingFaceHub
@@ -35,7 +36,7 @@ class Model:
         
         logger.info(f'\nInitializing {self.model_name.upper()} model  - Temp: {self.temp} - Context window: {self.ctx_window} - Max tokens: {self.max_tokens}')
         
-        if 'gpt4all' in self.model_name:
+        if self.model_name == 'gpt4all':
             logger.debug(f'Loading GPT4All model from {self.local_model_path}')
             
             self.model = LlamaCpp(model_path=self.local_model_path,
@@ -44,7 +45,7 @@ class Model:
                                   max_tokens=self.max_tokens,
                                   temperature=self.temp)
         
-        elif 'llama' in self.model_name:
+        elif self.model_name == 'llama':
             logger.debug(f'Loading Llama model from {self.local_model_path}')
             
             self.model = LlamaCpp(model_path=self.local_model_path,
@@ -53,7 +54,7 @@ class Model:
                                   max_tokens=self.max_tokens,
                                   temperature=self.temp)
         
-        elif 'openai' in self.model_name:
+        elif self.model_name == 'openai':
             logger.debug(f'Loading from OpenAI')
             logger.debug(f'Using {self.openai_model}')
             if self.openai_model == 'text-davinci-003':
@@ -76,7 +77,7 @@ class Model:
         self.input_vars = input_vars
         self.prompt = PromptTemplate(template=template, input_variables=input_vars)
         
-        logger.info(f'Injecting Variables: {self.input_vars}')
+        logger.debug(f'Injecting Variables: {self.input_vars}')
         
         return self.prompt.template
     
@@ -87,7 +88,9 @@ class Model:
             logger.debug(f'Running Text Generation\n')
             out = llm.run(inject_obj)
         except Exception as e:
+            logger.info(f'RATE LIMIT! Waiting for 5 minutes')
             logger.warning(e)
-            return '', []
+            time.sleep(300)
+            return llm, ''
         
         return llm, out
