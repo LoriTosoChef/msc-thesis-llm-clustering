@@ -14,6 +14,8 @@ class Model:
                  model_name: str,
                  hf_repo: str = 'bigscience/bloom',
                  hf_api: str = '',
+                 openai_api: str = '',
+                 openai_model: str = 'gpt-3.5-turbo',
                  local_model_path: str = '',
                  temp: float = 1e-10,
                  ctx_window: int = 2048,
@@ -28,6 +30,8 @@ class Model:
         self.hf_api = hf_api
         self.local_model_path = local_model_path
         self.n_threads = n_threads
+        self.openai_api = openai_api
+        self.openai_model = openai_model
         
         logger.info(f'\nInitializing {self.model_name.upper()} model  - Temp: {self.temp} - Context window: {self.ctx_window} - Max tokens: {self.max_tokens}')
         
@@ -49,9 +53,19 @@ class Model:
                                   max_tokens=self.max_tokens,
                                   temperature=self.temp)
         
+        elif 'openai' in self.model_name:
+            logger.debug(f'Loading from OpenAI')
+            logger.debug(f'Using {self.openai_model}')
+            if self.openai_model == 'text-davinci-003':
+                from langchain.llms import OpenAI
+                self.model = OpenAI(model_name=self.openai_model, temperature=temp, max_tokens=max_tokens)
+        
+            elif self.openai_model == 'gpt-3.5-turbo':
+                from langchain.chat_models import ChatOpenAI
+                self.model = ChatOpenAI(model_name=self.openai_model, temperature=temp, max_tokens=max_tokens)
+        
         else:
             logger.debug(f'Loading from HuggingFace Hub')
-            logger.debug('BLOOM model has a preset context window of 2048')
             self.model = HuggingFaceHub(huggingfacehub_api_token=self.hf_api,
                                         repo_id=self.hf_repo,
                                         model_kwargs={'temperature': self.temp,

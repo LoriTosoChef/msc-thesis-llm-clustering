@@ -34,6 +34,7 @@ def generation_loop(model: Model,
             if not (i+1) == n:
                 # if on last iteration (and multiple of 50) skip this and save only outside loop
                 save_to_parquet(data_dir=out_dir, df=tweets, name=out_name)
-            
+    
+    tweets[model_col] = np.array(outs)
     save_to_parquet(data_dir=out_dir, df=tweets, name=out_name)
     return tweets
