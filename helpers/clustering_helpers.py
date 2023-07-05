@@ -35,9 +35,9 @@ def dbscan_loop(data,
     for n_components in n_components_space:
         for min_samples in min_samples_space:
             dbscan = ClusteringModel(model_name='dbscan',
-                                    min_samples=min_samples,
-                                    metric='euclidean',
-                                    eps=0.5)
+                                     min_samples=min_samples,
+                                     metric='euclidean',
+                                     eps=0.5)
 
             dbscan.fit_predict(embeddings=data, pca_flag=True, n_components=n_components)
 
@@ -59,7 +59,7 @@ def dbscan_loop(data,
     best_n_components = res_array['n_components'][best_score_index]
     best_min_samples = res_array['min_samples'][best_score_index]
 
-    logger.debug(f"Score: {best_score} - PCA: {best_n_components} - MIN_SAMPLES: {best_min_samples}")
+    logger.info(f"Score: {best_score} - PCA: {best_n_components} - MIN_SAMPLES: {best_min_samples}")
             
     return best_score, best_n_components, best_min_samples
 
