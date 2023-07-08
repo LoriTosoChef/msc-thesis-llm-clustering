@@ -25,31 +25,35 @@ def clustering_scores(embeddings: List[float], clusters: List[int]) -> dict:
 
 def dbscan_loop(data,
                 n_components_space: List[int],
-                min_samples_space = List[int]) -> dict:
+                min_samples_space = List[int],
+                eps_space=List[float]) -> dict:
 
     res = {}
     res['n_components'] = []
     res['min_samples'] = []
     res['score'] = []
+    res['eps'] = []
 
     for n_components in n_components_space:
         for min_samples in min_samples_space:
-            dbscan = ClusteringModel(model_name='dbscan',
-                                     min_samples=min_samples,
-                                     metric='euclidean',
-                                     eps=0.5)
+            for eps in eps_space:
+                dbscan = ClusteringModel(model_name='dbscan',
+                                         min_samples=min_samples,
+                                         metric='euclidean',
+                                         eps=eps)
 
-            dbscan.fit_predict(embeddings=data, pca_flag=True, n_components=n_components)
+                dbscan.fit_predict(embeddings=data, pca_flag=True, n_components=n_components)
 
-            try:
-                scores = silhouette_score(data, dbscan.clusters)
-            except Exception as e:
-                logger.debug(e)
-                scores = -np.inf
+                try:
+                    scores = silhouette_score(data, dbscan.clusters)
+                except Exception as e:
+                    logger.debug(e)
+                    scores = -np.inf
 
-            res['n_components'].append(n_components)
-            res['min_samples'].append(min_samples)
-            res['score'].append(scores)
+                res['n_components'].append(n_components)
+                res['min_samples'].append(min_samples)
+                res['score'].append(scores)
+                res['eps'].append(eps)
     
     res_array = {key: np.array(value) for key, value in res.items()}
 
@@ -58,10 +62,11 @@ def dbscan_loop(data,
     best_score = res_array['score'][best_score_index]
     best_n_components = res_array['n_components'][best_score_index]
     best_min_samples = res_array['min_samples'][best_score_index]
+    best_eps = res_array['eps'][best_score_index]
 
     logger.info(f"Score: {best_score} - PCA: {best_n_components} - MIN_SAMPLES: {best_min_samples}")
             
-    return best_score, best_n_components, best_min_samples
+    return best_score, best_n_components, best_min_samples, best_eps
 
 
 def kmeans_loop(data,
