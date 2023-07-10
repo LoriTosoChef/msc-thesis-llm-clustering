@@ -43,13 +43,12 @@ def plot_clusters_2D(df: pd.DataFrame,
       temp = embeddings_df[embeddings_df['label'] == label]
       ax.scatter(temp['x'], temp['y'], c=color_dict[label], label=label)
 
-   # KMeans on the embeddings to select four labels that are far from each other
-   kmeans = KMeans(n_clusters=n, random_state=42)
-   kmeans_label = kmeans.fit_predict(embeddings_2d)
-
    if manual:
       highlighted_df = embeddings_df.loc[indices]
    else:
+         # KMeans on the embeddings to select four labels that are far from each other
+      kmeans = KMeans(n_clusters=n, random_state=np.random.randint(low=1, high=100))
+      kmeans_label = kmeans.fit_predict(embeddings_2d)
       # four datapoints closest to the kmeans cluster centers
       indices = []
       for center in kmeans.cluster_centers_:
@@ -65,10 +64,11 @@ def plot_clusters_2D(df: pd.DataFrame,
       label = '\n'.join(label_lines + ['...\nCluster: ' + str(point['label'])])
 
       ax.annotate(label, (point['x'], point['y']))
-      
+   
+   plt.title(f'{llm.upper()} - {cluster_algo.upper()} clusters')   
    plt.legend()
    if save_fig:
-        plt.savefig(f'fig/{fig_name}.png', dpi=300)  # Save with a high DPI value
+        plt.savefig(f'fig/{llm}_{cluster_algo}_{fig_name}.png', dpi=300)  # Save with a high DPI value
    plt.show()
 
 
