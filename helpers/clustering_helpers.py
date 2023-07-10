@@ -33,6 +33,7 @@ def dbscan_loop(data,
     res['min_samples'] = []
     res['score'] = []
     res['eps'] = []
+    res['clusters'] = []
 
     for n_components in n_components_space:
         for min_samples in min_samples_space:
@@ -49,24 +50,33 @@ def dbscan_loop(data,
                 except Exception as e:
                     logger.debug(e)
                     scores = -np.inf
-
-                res['n_components'].append(n_components)
-                res['min_samples'].append(min_samples)
-                res['score'].append(scores)
-                res['eps'].append(eps)
-    
+                
+                if 1 in dbscan.clusters:
+                    res['clusters'] = 'Y'
+                    logger.info(f'Found clusters, score: {scores}, n_clusters: {len(set(dbscan.clusters))}')
+                    
+                    res['n_components'].append(n_components)
+                    res['min_samples'].append(min_samples)
+                    res['score'].append(scores)
+                    res['eps'].append(eps)
+                else:
+                    res['clusters'] = 'N'
+                    
     res_array = {key: np.array(value) for key, value in res.items()}
+    try:
+        best_score_index = np.argmax(res_array['score'])
+        
+        best_score = res_array['score'][best_score_index]
+        best_n_components = res_array['n_components'][best_score_index]
+        best_min_samples = res_array['min_samples'][best_score_index]
+        best_eps = res_array['eps'][best_score_index]
 
-    best_score_index = np.argmax(res_array['score'])
-
-    best_score = res_array['score'][best_score_index]
-    best_n_components = res_array['n_components'][best_score_index]
-    best_min_samples = res_array['min_samples'][best_score_index]
-    best_eps = res_array['eps'][best_score_index]
-
-    logger.info(f"Score: {best_score} - PCA: {best_n_components} - MIN_SAMPLES: {best_min_samples}")
-            
-    return best_score, best_n_components, best_min_samples, best_eps
+        logger.info(f"Score: {best_score} - PCA: {best_n_components} - MIN_SAMPLES: {best_min_samples} - EPS: {best_eps}")
+        
+        return best_score, best_n_components, best_min_samples, best_eps
+    except Exception as e:
+        logger.warning(e)
+        return None, None, None, None
 
 
 def kmeans_loop(data,
@@ -116,5 +126,7 @@ def kmeans_loop(data,
     best_max_iter = res_array['max_iter'][best_score_index]
     best_n_clusters = res_array['n_clusters'][best_score_index]
     best_tol = res_array['tol'][best_score_index]
+    
+    logger.info(f"Score: {best_score} - PCA: {best_n_components} - N_CLUSTERS: {best_n_clusters}")
         
     return best_score, best_n_components, best_max_iter, best_n_clusters, best_tol
