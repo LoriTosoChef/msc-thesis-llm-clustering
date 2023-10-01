@@ -49,6 +49,8 @@ class ClusteringModel:
             logger.debug(f'Performing PCA with {kwargs["n_components"]} components...')
             pca = PCA(n_components=kwargs['n_components'])
             embeddings = pca.fit_transform(embeddings)
+            self.actual_components = pca.n_components_
+            
         
         self.model.fit(embeddings)
         self.clusters = self.model.labels_
