@@ -19,10 +19,9 @@ class ClusteringModel:
         
         logger.debug(f'Initializing {self.model_name.upper()}')
         if 'kmeans' in self.model_name:
-            logger.debug(f'N_CLUSTERS: {kwargs["n_clusters"]} - MAX_ITER: {kwargs["max_iter"]} - TOL: {kwargs["tol"]}')
+            logger.debug(f'N_CLUSTERS: {kwargs["n_clusters"]} - MAX_ITER: {kwargs["max_iter"]}')
             self.model = KMeans(n_clusters=kwargs['n_clusters'],
                                 max_iter=kwargs['max_iter'],
-                                tol=kwargs['tol'],
                                 n_init=kwargs['n_init'],
                                 random_state=self.random_state)
         elif self.model_name == 'dbscan':
@@ -47,9 +46,9 @@ class ClusteringModel:
         
         if pca_flag:
             logger.debug(f'Performing PCA with {kwargs["n_components"]} components...')
-            pca = PCA(n_components=kwargs['n_components'])
-            embeddings = pca.fit_transform(embeddings)
-            self.actual_components = pca.n_components_
+            self.pca = PCA(n_components=kwargs['n_components'])
+            embeddings = self.pca.fit_transform(embeddings)
+            self.actual_components = self.pca.n_components_
             
         
         self.model.fit(embeddings)

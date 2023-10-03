@@ -16,6 +16,7 @@ def dbscan_loop(data,
 
     res = {}
     res['n_components'] = []
+    res['actual_components'] = []
     res['min_samples'] = []
     res['score'] = []
     res['eps'] = []
@@ -38,31 +39,15 @@ def dbscan_loop(data,
                     scores = -np.inf
                 
                 if 1 in dbscan.clusters:
-                    res['clusters'] = 'Y'
-                    logger.info(f'Found clusters, score: {scores}, n_clusters: {len(set(dbscan.clusters))}')
+                    logger.info(f'Found them')
                     
                     res['n_components'].append(n_components)
+                    res['actual_components'].append(dbscan.actual_components)
                     res['min_samples'].append(min_samples)
                     res['score'].append(scores)
                     res['eps'].append(eps)
-                else:
-                    res['clusters'] = 'N'
                     
-    res_array = {key: np.array(value) for key, value in res.items()}
-    try:
-        best_score_index = np.argmax(res_array['score'])
-        
-        best_score = res_array['score'][best_score_index]
-        best_n_components = res_array['n_components'][best_score_index]
-        best_min_samples = res_array['min_samples'][best_score_index]
-        best_eps = res_array['eps'][best_score_index]
-
-        logger.info(f"Score: {best_score} - PCA: {best_n_components} - MIN_SAMPLES: {best_min_samples} - EPS: {best_eps}")
-        
-        return best_score, best_n_components, best_min_samples, best_eps
-    except Exception as e:
-        logger.warning(e)
-        return None, None, None, None
+    return res
 
 
 def kmeans_loop(data,
@@ -88,7 +73,7 @@ def kmeans_loop(data,
                 kmeans.fit_predict(embeddings=data, pca_flag=True, n_components=n_components)
 
                 try:
-                    scores = silhouette_score(data, kmeans.clusters)
+                    scores = silhouette_score(data, kmeans.clusters, metric='euclidean')
                 except Exception as e:
                     logger.debug(e)
                     scores = -np.inf
@@ -98,17 +83,41 @@ def kmeans_loop(data,
                 res['max_iter'].append(max_iter)
                 res['n_clusters'].append(n_clusters)
                 res['score'].append(scores)
-    
-    res_array = {key: np.array(value) for key, value in res.items()}
-
-
-    best_score_index = np.argmax(res_array['score'])
-
-    best_score = res_array['score'][best_score_index]
-    best_n_components = res_array['n_components'][best_score_index]
-    best_max_iter = res_array['max_iter'][best_score_index]
-    best_n_clusters = res_array['n_clusters'][best_score_index]
-    
-    logger.info(f"Score: {best_score} - PCA: {best_n_components} - N_CLUSTERS: {best_n_clusters}")
         
-    return best_score, best_n_components, best_max_iter, best_n_clusters
+    return res
+
+
+def get_best_scores(results: dict, model_name: str):
+    best_scores = {}
+    if 'kmeans' in model_name.lower():
+        res_array = {key: np.array(value) for key, value in results.items()}
+        
+        best_score_index = np.argmax(res_array['score'])
+
+        best_scores['score'] = res_array['score'][best_score_index]
+        best_scores['n_components'] = res_array['n_components'][best_score_index]
+        best_scores['actual_components'] = res_array['actual_components'][best_score_index]
+        best_scores['max_iter'] = res_array['max_iter'][best_score_index]
+        best_scores['n_clusters'] = res_array['n_clusters'][best_score_index]
+        
+        logger.info(f"Best Score: {best_scores['score']}")
+        
+        return best_scores
+    
+    elif 'dbscan' in model_name:
+        res_array = {key: np.array(value) for key, value in results.items()}
+        try:
+            best_score_index = np.argmax(res_array['score'])
+            
+            best_scores['score'] = res_array['score'][best_score_index]
+            best_scores['n_components'] = res_array['n_components'][best_score_index]
+            best_scores['actual_components'] = res_array['actual_components'][best_score_index]
+            best_scores['min_samples'] = res_array['min_samples'][best_score_index]
+            best_scores['eps'] = res_array['eps'][best_score_index]
+            
+            logger.info(f"Best Score: {best_scores['score']}")
+            
+            return best_scores
+        except Exception as e:
+            logger.warning(e)
+            return {}
