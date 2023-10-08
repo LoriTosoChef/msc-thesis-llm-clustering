@@ -20,7 +20,7 @@ def dbscan_loop(data,
     res['min_samples'] = []
     res['score'] = []
     res['eps'] = []
-    res['clusters'] = []
+    res['n_clusters'] = []
 
     for n_components in n_components_space:
         for min_samples in min_samples_space:
@@ -40,12 +40,13 @@ def dbscan_loop(data,
                 
                 if 1 in dbscan.clusters:
                     logger.info(f'Found them')
-                    
+
                     res['n_components'].append(n_components)
                     res['actual_components'].append(dbscan.actual_components)
                     res['min_samples'].append(min_samples)
                     res['score'].append(scores)
                     res['eps'].append(eps)
+                    res['n_clusters'].append(len(set(dbscan.clusters)))
                     
     return res
 
@@ -114,6 +115,7 @@ def get_best_scores(results: dict, model_name: str):
             best_scores['actual_components'] = res_array['actual_components'][best_score_index]
             best_scores['min_samples'] = res_array['min_samples'][best_score_index]
             best_scores['eps'] = res_array['eps'][best_score_index]
+            best_scores['n_clusters'] = res_array['n_clusters'][best_score_index]
             
             logger.info(f"Best Score: {best_scores['score']}")
             
