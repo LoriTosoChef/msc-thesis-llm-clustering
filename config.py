@@ -3,6 +3,8 @@ import logging
 
 from dotenv import load_dotenv
 
+logging.getLogger().removeHandler("sentence_transformers")
+
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(format='%(asctime)s - %(levelname)-8s | %(name)-10s | %(message)s',
