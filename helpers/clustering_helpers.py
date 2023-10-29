@@ -175,3 +175,5 @@ def get_topics(df: pd.DataFrame, llm: str, algo: str):
         topics_per_cluster[cluster] = topic_words
         
         logger.info(f'{cluster}: {topic_words}')
+        
+        return topic_words
