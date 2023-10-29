@@ -36,7 +36,7 @@ def plot_clusters_2D(df: pd.DataFrame,
       embeddings_df['text'] = df[llm].values
    #color mapping
    labels = embeddings_df['label'].unique()
-   colors = ['lightpink', 'lightblue', 'lightgreen', 'lightred', 'green', 'red', 'yellow']
+   colors = ['lightpink', 'lightblue', 'lightgreen', 'lightsalmon', 'green', 'red', 'yellow', 'bisque', 'lightcyan', 'thistle', 'lavender']
    color_dict = dict(zip(labels, colors))
    # create labels
    for label in labels:
@@ -45,6 +45,7 @@ def plot_clusters_2D(df: pd.DataFrame,
 
    if manual:
       highlighted_df = embeddings_df.loc[indices]
+      ax.scatter(highlighted_df['x'], highlighted_df['y'], c=highlighted_df['label'].apply(lambda label: color_dict[label]), edgecolor='black', s=25)
    else:
          # KMeans on the embeddings to select four labels that are far from each other
       kmeans = KMeans(n_clusters=n, random_state=np.random.randint(low=1, high=100))
@@ -66,7 +67,7 @@ def plot_clusters_2D(df: pd.DataFrame,
       ax.annotate(label, (point['x'], point['y']))
    
    plt.title(f'{llm.upper()} - {cluster_algo.upper()} clusters')   
-   plt.legend()
+   #plt.legend()
    if save_fig:
         plt.savefig(f'fig/{llm}_{cluster_algo}_{fig_name}.png', dpi=300)  # Save with a high DPI value
    plt.show()

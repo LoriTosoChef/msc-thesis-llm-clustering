@@ -141,7 +141,8 @@ def silhouette_score_per_cluster(df: pd.DataFrame, algo: str):
     
     unique_cl_gpt = df[f'gpt-3.5-turbo_{algo}'].unique()
     unique_cl_alpaca = df[f'alpaca_{algo}'].unique()
-    unique_cl_gpt4all = df[f'gpt4all_{algo}'].unique()
+    if algo == 'kmeans':
+        unique_cl_gpt4all = df[f'gpt4all_{algo}'].unique()
     
     for cluster in unique_cl_gpt:
         means_list_gpt[str(cluster)] = sample_sil_gpt[df[f'gpt-3.5-turbo_{algo}'] == cluster].mean()
