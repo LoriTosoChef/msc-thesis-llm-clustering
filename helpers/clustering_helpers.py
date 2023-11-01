@@ -6,6 +6,7 @@ import pandas as pd
 
 from models.clustering import ClusteringModel
 from sklearn.metrics import silhouette_score, silhouette_samples
+from sklearn.feature_extraction.text import CountVectorizer
 
 from bertopic import BERTopic
 
@@ -133,7 +134,6 @@ def get_best_scores(results: dict, model_name: str):
 def silhouette_score_per_cluster(df: pd.DataFrame, algo: str):
     sample_sil_gpt = silhouette_samples(df[f'gpt-3.5-turbo_pca_emb_{algo}'].tolist(), df[f'gpt-3.5-turbo_{algo}'])
     sample_sil_alpaca = silhouette_samples(df[f'alpaca_pca_emb_{algo}'].tolist(), df[f'alpaca_{algo}'])
-    sample_sil_gpt4all = silhouette_samples(df[f'gpt4all_pca_emb_{algo}'].tolist(), df[f'gpt4all_{algo}'])
 
     means_list_gpt = {}
     means_list_alpaca = {}
@@ -142,6 +142,7 @@ def silhouette_score_per_cluster(df: pd.DataFrame, algo: str):
     unique_cl_gpt = df[f'gpt-3.5-turbo_{algo}'].unique()
     unique_cl_alpaca = df[f'alpaca_{algo}'].unique()
     if algo == 'kmeans':
+        sample_sil_gpt4all = silhouette_samples(df[f'gpt4all_pca_emb_{algo}'].tolist(), df[f'gpt4all_{algo}'])
         unique_cl_gpt4all = df[f'gpt4all_{algo}'].unique()
     
     for cluster in unique_cl_gpt:
@@ -163,10 +164,11 @@ def get_topics(df: pd.DataFrame, llm: str, algo: str):
     
     topics_per_cluster = {}
 
+    vectorizer_model = CountVectorizer(stop_words="english")
     for cluster in clusters:
         df_cluster = df[df[f'{llm}_{algo}'] == cluster]
         
-        topic_model = BERTopic()
+        topic_model = BERTopic(vectorizer_model=vectorizer_model)
         topics, _ = topic_model.fit_transform(df_cluster[f'{llm}'])
         topics_series = pd.Series(topics)
 
@@ -175,6 +177,4 @@ def get_topics(df: pd.DataFrame, llm: str, algo: str):
         
         topics_per_cluster[cluster] = topic_words
         
-        logger.info(f'{cluster}: {topic_words}')
-        
-        return topic_words
+    return topics_per_cluster
