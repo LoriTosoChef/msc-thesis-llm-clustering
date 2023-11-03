@@ -1,13 +1,7 @@
 # **msc-thesis-llm-clustering**
 
 ## **Aim of this study**
-TODO
-
----
-
-## **TODOs**
-- Adjust Llama 7B and 13B params to stop output generation.
-- Explore different prompts, system messages and contexts
+The primary objective of this study is to evaluate the effectiveness of AI-driven techniques, specifically using large language models (LLMs) built on the transformer neural network architecture, and trained on a considerable amount of text data, in spotting and labeling potential leads on social media platforms, with a specific emphasis on Twitter. 
 
 ---
 
