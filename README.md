@@ -11,9 +11,13 @@ To download tweets and to run the models create a virtual env and install the re
 ```pip install -r requirements.txt```
 
 ### Initial Configurations
-Create all the environment variables needed and set them. Look for variable names in the ```config.py``` file. Set these two variables from within the ```config.py```file:
-- ```RAW_DATA_DIR```    - where raw datasets will be stored
-- ```DATA_DIR```        - where clean and ready to use datasets will be stored
+Create all the environment variables needed and set them. Look for variable names in the ```config.py``` file.
+- ```RAW_DATA_DIR``` - where raw datasets will be stored
+- ```DATA_DIR``` - where clean and ready to use datasets will be stored
+- ```{MODEL}_PATH``` - path to local models
+- ```OPENAI_API_KEY``` - OpenAI API secret key
+
+
 ### Download Tweets
 Use ```dataset.ipynb``` notebook. Set Twitter API keys (be sure to check out twitter api and developer docs) by setting:
 
