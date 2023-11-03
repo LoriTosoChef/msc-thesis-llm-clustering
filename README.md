@@ -12,8 +12,8 @@ To download tweets and to run the models create a virtual env and install the re
 
 ### Initial Configurations
 Create all the environment variables needed and set them. Look for variable names in the ```config.py``` file. Set these two variables from within the ```config.py```file:
-- ```RAW_DATA_DIR``` - where raw datasets will be stored
-- ```DATA_DIR``` - where clean and ready to use datasets will be stored
+- ```RAW_DATA_DIR```    - where raw datasets will be stored
+- ```DATA_DIR```        - where clean and ready to use datasets will be stored
 ### Download Tweets
 Use ```dataset.ipynb``` notebook. Set Twitter API keys (be sure to check out twitter api and developer docs) by setting:
 
