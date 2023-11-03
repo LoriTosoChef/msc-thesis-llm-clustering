@@ -13,6 +13,7 @@ attrs==22.2.0
 backcall==0.2.0
 backoff==2.2.1
 beautifulsoup4==4.11.2
+bertopic==0.15.0
 bitsandbytes==0.37.2
 bleach==6.0.0
 blinker==1.6
@@ -41,6 +42,7 @@ decorator==5.1.1
 defusedxml==0.7.1
 dill==0.3.6
 entrypoints==0.4
+et-xmlfile==1.1.0
 executing==1.2.0
 fastjsonschema==2.16.3
 fastparquet==2023.2.0
@@ -120,8 +122,10 @@ numba==0.56.4
 numpy==1.23.5
 oauthlib==3.2.2
 openai==0.27.8
+openpyxl==3.1.2
 packaging==23.0
 pandas==1.5.3
+pandoc==2.3
 pandocfilters==1.5.0
 panel==0.14.4
 param==1.13.0
@@ -131,6 +135,9 @@ pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==9.5.0
 platformdirs==3.1.1
+plotly==5.18.0
+plumbum==1.8.2
+ply==3.11
 praw==7.7.0
 prawcore==2.3.0
 prometheus-client==0.16.0
@@ -213,6 +220,7 @@ webencodings==0.5.1
 websocket-client==1.5.1
 widgetsnbextension==4.0.7
 wonderwords==2.2.0
+wordcloud==1.9.2
 xarray==2023.4.1
 xxhash==3.2.0
 xyzservices==2023.2.0
