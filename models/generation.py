@@ -39,6 +39,7 @@ class Model:
         if self.model_name == 'gpt4all':
             logger.debug(f'Loading GPT4All model from {self.local_model_path}')
             
+            # initialize local gpt4all model
             self.model = LlamaCpp(model_path=self.local_model_path,
                                   n_ctx=self.ctx_window,
                                   n_threads=self.n_threads,
@@ -48,6 +49,7 @@ class Model:
         elif self.model_name == 'llama':
             logger.debug(f'Loading Llama model from {self.local_model_path}')
             
+            # initialize local llama model
             self.model = LlamaCpp(model_path=self.local_model_path,
                                   n_ctx=self.ctx_window,
                                   n_threads=self.n_threads,
@@ -59,14 +61,20 @@ class Model:
             logger.debug(f'Using {self.openai_model}')
             if self.openai_model == 'text-davinci-003':
                 from langchain.llms import OpenAI
+                
+                # initialize text-davinci-003, more expansive model
                 self.model = OpenAI(model_name=self.openai_model, temperature=temp, max_tokens=max_tokens)
         
             elif self.openai_model == 'gpt-3.5-turbo':
                 from langchain.chat_models import ChatOpenAI
+                
+                # initialize gpt-3.5-turbo, less expansive model, need to use different class for the chat interface
                 self.model = ChatOpenAI(model_name=self.openai_model, temperature=temp, max_tokens=max_tokens)
         
         else:
             logger.debug(f'Loading from HuggingFace Hub')
+            
+            # initialize generic model from huggingface
             self.model = HuggingFaceHub(huggingfacehub_api_token=self.hf_api,
                                         repo_id=self.hf_repo,
                                         model_kwargs={'temperature': self.temp,
@@ -74,6 +82,7 @@ class Model:
     
     
     def init_prompt(self, template: str, input_vars: List[str]) -> PromptTemplate:
+        # initialize prompt template for injection
         self.input_vars = input_vars
         self.prompt = PromptTemplate(template=template, input_variables=input_vars)
         
@@ -83,6 +92,7 @@ class Model:
     
     
     def generate(self, inject_obj: Optional[str]) -> Tuple[str, list]:
+        # initialize chain with model and prompt
         llm = LLMChain(prompt=self.prompt, llm=self.model)
         try:
             logger.debug(f'Running Text Generation\n')

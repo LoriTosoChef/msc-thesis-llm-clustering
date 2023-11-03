@@ -27,6 +27,7 @@ def generation_loop(model: Model,
         llm, out = model.generate(inject_obj=tweet)
         # insert output
         outs[i] = out
+        # cooldown for rate limiting and CPU cooldown
         time.sleep(fast_cool)
         if (i+1) % 50 == 0:
             logger.info(f'Step: {i+1} - Saving checkpoint and cooldown for {slow_cool/60}m...')
@@ -34,6 +35,7 @@ def generation_loop(model: Model,
             if not (i+1) == n:
                 # if on last iteration (and multiple of 50) skip this and save only outside loop
                 save_to_parquet(data_dir=out_dir, df=tweets, name=out_name)
+            # CPU cooldown
             time.sleep(slow_cool)
     
     tweets[model_col] = np.array(outs)
